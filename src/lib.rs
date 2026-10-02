@@ -47,31 +47,25 @@ pub(crate) use context::sealed;
 /// A `RawWindow` is intentionally short-lived. It is created for callbacks and
 /// native initialization and must not be stored beyond those operations.
 pub struct RawWindow<'a> {
-    #[cfg(windows)]
-    pub hwnd: isize,
-
-    #[cfg(any(
-        target_os = "linux",
-        target_os = "dragonfly",
-        target_os = "freebsd",
-        target_os = "netbsd",
-        target_os = "openbsd"
-    ))]
-    pub gtk_window: &'a gtk::ApplicationWindow,
-
-    #[cfg(any(
-        target_os = "linux",
-        target_os = "dragonfly",
-        target_os = "freebsd",
-        target_os = "netbsd",
-        target_os = "openbsd"
-    ))]
-    pub default_vbox: Option<&'a gtk::Box>,
-
-    /// Keeps this `RawWindow` structurally tied to the Tao window even on
-    /// platforms whose native handle itself carries no Rust lifetime, such as
-    /// HWND on Windows.
-    pub window: &'a Window,
+  #[cfg(windows)]
+  pub hwnd: isize,
+  #[cfg(any(
+    target_os = "linux",
+    target_os = "dragonfly",
+    target_os = "freebsd",
+    target_os = "netbsd",
+    target_os = "openbsd"
+  ))]
+  pub gtk_window: &'a gtk::ApplicationWindow,
+  #[cfg(any(
+    target_os = "linux",
+    target_os = "dragonfly",
+    target_os = "freebsd",
+    target_os = "netbsd",
+    target_os = "openbsd"
+  ))]
+  pub default_vbox: Option<&'a gtk::Box>,
+  pub _marker: &'a std::marker::PhantomData<()>,
 }
 
 pub struct WindowMenu {
